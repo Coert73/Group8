@@ -2,10 +2,7 @@ package BusinessLogicLayer;
 
 public interface Events {
 
-      void getDetails()
-      {
-            
-      }                   
+      void getDetails();                  
 }
     
 

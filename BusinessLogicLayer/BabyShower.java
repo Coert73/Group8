@@ -3,8 +3,10 @@ package BusinessLogicLayer;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 
 public class BabyShower implements Events{
@@ -20,11 +22,10 @@ public class BabyShower implements Events{
     int numberOfAdults;
     int numberOfChildren;
     
-    
     //menu
-    String BabyShowerBouquet;
+    List<String> menu = new ArrayList<String>();
 
-	@Override
+	
 	public void getdetails() 
     {
         Scanner scn = new Scanner(System.in);
@@ -90,8 +91,9 @@ public class BabyShower implements Events{
 
         System.out.println("==================================Menu:=============================");
         System.out.println("Do you want the preset Baby shower snack menu? ");
-        BabyShowerBouquet = scn.nextLine();
-
+        if (scn.nextLine() == "yes"){
+            menu.add("#Snack-Menu");
+        }
         scn.close();//commit 
     }
 
@@ -100,4 +102,22 @@ public class BabyShower implements Events{
         // TODO Auto-generated method stub
 
     }
+
+    public BabyShower(String eventType, String eventDateandTime, String eventCity, String eventArea, String eventStreet,
+            String eventAdress, String eventHuoseNumber, String eventTheme, int numberOfAdults, int numberOfChildren,
+            List<String> menu) {
+        this.eventType = eventType;
+        this.eventDateandTime = eventDateandTime;
+        this.eventCity = eventCity;
+        this.eventArea = eventArea;
+        this.eventStreet = eventStreet;
+        this.eventAdress = eventAdress;
+        this.eventHuoseNumber = eventHuoseNumber;
+        this.eventTheme = eventTheme;
+        this.numberOfAdults = numberOfAdults;
+        this.numberOfChildren = numberOfChildren;
+        this.menu = menu;
+    }
+
+   
 }

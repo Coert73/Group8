@@ -4,12 +4,9 @@ import java.util.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Scanner;
 
-public class BirthDay implements Events{
-    
+public class BirthDay implements Events {
+
     String eventType = "BirthDay";
     String eventDateandTime;
     String eventCity;
@@ -20,13 +17,10 @@ public class BirthDay implements Events{
     String eventTheme;
     int numberOfAdults;
     int numberOfChildren;
-    
-    //menu
-    String adultMeal;
-    String kidsMeal;
-    String Desert;
 
-	@Override
+    // menu
+    List<String> menu = new ArrayList<String>();
+
 	public void getdetails() 
     {
         Scanner scn = new Scanner(System.in);
@@ -92,14 +86,38 @@ public class BirthDay implements Events{
 
         System.out.println("==================================Menu:=============================");
         System.out.println("Do you want kids preset menu? ");
-        adultMeal = scn.nextLine();
+        if (scn.nextLine() == "yes"){
+            menu.add("#kids-meal");
+        }
 
         System.out.println("Do you want adult preset menu? ");
-        kidsMeal = scn.nextLine();
-
+        if (scn.nextLine() == "yes"){
+            menu.add("#adult-meal");
+        }
+        
         System.out.println("Do you want desert? ");
-        Desert = scn.nextLine();
+        if (scn.nextLine() == "yes"){
+            menu.add("#deserts");
+        }
 
         scn.close();//commit
     }
+
+    public BirthDay(String eventType, String eventDateandTime, String eventCity, String eventArea, String eventStreet,
+            String eventAdress, String eventHuoseNumber, String eventTheme, int numberOfAdults, int numberOfChildren,
+            List<String> menu) {
+        this.eventType = eventType;
+        this.eventDateandTime = eventDateandTime;
+        this.eventCity = eventCity;
+        this.eventArea = eventArea;
+        this.eventStreet = eventStreet;
+        this.eventAdress = eventAdress;
+        this.eventHuoseNumber = eventHuoseNumber;
+        this.eventTheme = eventTheme;
+        this.numberOfAdults = numberOfAdults;
+        this.numberOfChildren = numberOfChildren;
+        this.menu = menu;
+    }
+
+    
 }
