@@ -7,8 +7,8 @@ import BusinessLogicLayer.*;
 
 public class ReadData 
 {
-    List<Client> clients = new ArrayList<Client>();
-    List<Object> events = new ArrayList<Object>();
+    public List<Client> clients = new ArrayList<Client>();
+    public List<Object> events = new ArrayList<Object>();
 
     public ReadData() {
       try {
@@ -62,5 +62,13 @@ public class ReadData
 
         //This is a test
       }
+    }
+
+    public List<Object> getEvents() {
+      return events;
+    }
+
+    public List<Client> getClients() {
+      return clients;
     }
 }
