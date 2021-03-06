@@ -1,7 +1,6 @@
 package PresentingLayer;
 
-import java.lang.ProcessBuilder.Redirect.Type;
-import java.lang.reflect.Field;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -9,12 +8,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Scanner;
-import java.time.format.DateTimeFormatter;  
-import java.time.LocalDateTime; 
-
-import javax.xml.crypto.Data;
-
-import DataAccessLayer.ReadData;
 import DataAccessLayer.WriteData;
 
 import java.util.List;
@@ -22,18 +15,18 @@ import BusinessLogicLayer.*;
 
 public class MainForm {
 
-    ////////////////TODO Test everything out please and fix the bugs///////////////////////////
+    
     public static List<Events> events = new ArrayList<Events>();
     public static List<Client> clients = new ArrayList<Client>();
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException{
         Scanner scn = new Scanner(System.in);
         int Mainoption = 0;
-        ReadData reader = new ReadData();
+        DataHandler dataHandler = new DataHandler();
 
         ////////////////////////////////////Grab Data from Reader//////////////////////////////////////
-        reader.Read();
-        events = reader.getEvents();
-        clients = reader.getClients();
+        
+        events = dataHandler.getEvents();
+        clients = dataHandler.getClient();
 
         while (Mainoption !=4)
         ////////////////////////////////////Main Menu//////////////////////////////////////
@@ -95,7 +88,7 @@ public class MainForm {
             option = scn.nextInt();
             List<MenuItem> menu = new ArrayList<MenuItem>();
 
-            String eventType;
+            String eventType = "Not Specified";
             switch(option) {
                 case 1:
                 eventType = "BabyShower";
@@ -116,6 +109,10 @@ public class MainForm {
                 case 5:
                 eventType = "Year_End_Function";
                 break;
+
+                default:
+                eventType = "Not Specified";
+                break;
                 
                 }
 
@@ -127,9 +124,6 @@ public class MainForm {
                      System.out.println("Today's date : " + todaysdate);
 
                     //Get todays Date
-                    Date date1 = Calendar.getInstance().getTime();  //changed
-
-                    DateFormat dateFormat2 = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");  
                     String strDate = dateFormat.format(date);  
 
                     //Given Date in String format	  
@@ -150,16 +144,37 @@ public class MainForm {
                     //Displaying the new Date after addition of Days
                     System.out.println("This will be the next available slot: "+ newDate);
 
-                    //if(eventDateandTime => newDate,"Available","Not available")
-                    //{
-                        System.out.println("Booking date available.");
-                        System.out.println("Event date sucessfully set.");
-                    //}
-                    else
-                    {
-                        System.out.println("We do not have the date you selected available, please note that you have to place the booking 15 days in advance");
+                    boolean correct = false;
+                    String eventTime = "08:00:00";
+
+                    while (!correct) {
+                        try {
+                            System.out.println("Enter Date. Example (2020-01-01)");
+                            String eventDateStr = scn.nextLine();
+                            System.out.println("Enter Time. Example (07:00)");
+                            eventTime = scn.nextLine();
+                            SimpleDateFormat parser = new SimpleDateFormat("HH:mm");
+                            Date timeTest = parser.parse(eventTime);
+                            Date toleratedTime = parser.parse("18:01");
+                            Date eventDate = new SimpleDateFormat("yyyy/MM/dd").parse(eventDateStr);
+                            Date toleratedDate = new SimpleDateFormat("yyyy/MM/dd").parse(newDate);
+
+                            if(eventDate.compareTo(toleratedDate) >= 0 && timeTest.before(toleratedTime))
+                            {
+                                newDate = eventDate.toString();
+                                System.out.println("Event date sucessfully set.");
+                            }
+                            else
+                            {
+                                System.out.println("We do not have the date you selected available");
+                                System.out.println("Note: Booking must be 15 days in advance and we only accept booking from 18:00\n");
+                            }
+                        }
+                        catch (Exception ex) {
+
+                        }
                     }
-                
+         
                     //Get adress Details
                     System.out.println("City: ");
                     String eventCity = scn.nextLine();
@@ -167,8 +182,6 @@ public class MainForm {
                     String eventArea = scn.nextLine();      
                     System.out.println("Street: ");
                     String eventStreet = scn.nextLine();
-                    System.out.println("House Number: ");
-                    String eventHuoseNumber = scn.nextLine();
                     //Compress adress
                    
                     System.out.println("How many adults?");
@@ -177,8 +190,12 @@ public class MainForm {
                     System.out.println("How many children?");
                     int numberOfChildren = scn.nextInt();
 
-                    System.out.println("Do you want a theme?(Yes/No)");
-                    String eventTheme = scn.nextLine();
+                    System.out.println("Do you want a theme?(y/n)");
+                    String eventTheme = "None";
+                    if (scn.nextLine() == "y") {
+                        System.out.println("Enter your theme:");
+                        eventTheme = scn.nextLine();
+                    }
 
                     if (option == 1) 
                     {
@@ -237,109 +254,14 @@ public class MainForm {
                             }
                         }
                     }
-                    events.add(new Events(eventType,eventDateandTime,eventCity,eventArea,eventStreet,eventTheme,numberOfAdults,numberOfChildren,clientNum,menu));         
-                }}
-            break;
-
-
-                case 4:
-                System.out.println("---------EDIT BOOKING---------\n");
-                System.out.println("Which booking? \n");
-                System.out.println("Client ID\t\t\tEvent Type\t\t\tDateAndTime\t\t\tCity\t\t\tArea\t\t\tStreet\t\t\tTheme\t\t\t# of Adults\t\t\t# of Children");
-                for (Events event : events) {
-                    System.out.println(event.getClientNum() + "\t\t\t" + event.getEventType() + "\t\t\t" + event.getEventDateandTime() + "\t\t\t" + event.getEventCity() + "\t\t\t" + event.getEventArea() + "\t\t\t" + event.getEventStreet() + "\t\t\t" + event.getEventTheme() + "\t\t\t" + event.getNumberOfAdults() + event.getNumberOfChildren());
-                
+                    events.add(new Events(eventType,newDate + " " + eventTime,eventCity,eventArea,eventStreet,eventTheme,numberOfAdults,numberOfChildren,clientNum,menu));         
                 }
-                int bookingNum = scn.nextInt();
-                System.out.println("\nWhich field?\n");
-                Field[] fields = Events.class.getFields();
-                int itemNum = 1;
-
-                for (Field field : fields) {
-                    System.out.println(itemNum + ". " + field);
-                    itemNum++;
-                }
-                int fieldNum = scn.nextInt();
-
-                System.out.println("\nEnter new value. Note: Date format (2000-01-01)\n");
-                String newValue = scn.nextLine();
-
-                switch (fieldNum) 
-                {
-                    case 1:
-                    ValidateValue(newValue,"Integer");
-                    events.get(itemNum).setClientNum(newValue);
-                    break;
-                    case 2:
-                    ValidateValue(newValue,"String");
-                    events.get(itemNum).setEventType(newValue);
-                    break;
-                    case 3:
-                    ValidateValue(newValue,"Date");
-                    events.get(itemNum).setEventDateandTime(newValue);
-                    break;
-                    case 4:
-                    ValidateValue(newValue,"String");
-                    events.get(itemNum).setEventCity(newValue);
-                    break;
-                    case 5:
-                    ValidateValue(newValue,"String");
-                    events.get(itemNum).setEventArea(newValue);
-                    break;
-                    case 6:
-                    ValidateValue(newValue,"String");
-                    events.get(itemNum).setEventStreet(newValue);
-                    break;
-                    case 7:
-                    ValidateValue(newValue,"String");
-                    events.get(itemNum).setEventTheme(newValue);
-                    break;
-                    case 8:
-                    ValidateValue(newValue,"Integer");
-                    events.get(itemNum).setNumberOfAdults(newValue);
-                    break;
-                    case 9:
-                    ValidateValue(newValue,"Integer");
-                    events.get(itemNum).setNumberOfChildren(newValue);
-                    break;
-                }
-                System.out.println("\nField Edited\n");
-                break;
-
-                case 5:
-                System.out.println("---------EDIT CLIENTS---------\n");
-                System.out.println("Which client? \n");
-                System.out.println("Client ID\t\t\tName\t\t\tSurname\t\t\tPhone");
-                for (Client client : clients) {
-                    System.out.println(client.getClientNum() + "\t\t\t" + client.getName() + "\t\t\t" + client.getSurname() + "\t\t\t" + client.getCellNumber());
-                }
-
-//TODO: code an edit function for client. Ask them which client and then what field and then the change value
-    
-                break;
-
-                case 6:
-                System.out.println("---------EDIT MENU ITEMS---------\n");
-                System.out.println("ID\t\t\tMenu Item\t\t\tDescription\t\t\tType\t\t\tCosts"); 
-                for (MenuItem menuItem : event.getMenu()) {
-                    System.out.println(countb + "\t\t\t" + menuItem.getMenuItem() + "\t\t\t" + menuItem.getDescription() + "\t\t\t" + menuItem.getMealType() + "\t\t\t" + menuItem.getCost()); 
-                    count++;
-                }
-
-//TODO: code an edit function for menu items. Ask them which menu item and then what field and then the change value
-    
-                break;
                 WriteData write = new WriteData();
                 //Save all info
                 write.SaveBooking(events);
                 write.SaveClients(clients);
-
-                default:
-                
                 break;
-        }
-
-
+            }
         scn.close();//commit 
     }
 
@@ -373,47 +295,5 @@ public class MainForm {
         return type;
         
         
-    }
-
-    public void ValidateValue(String value, String excpectedType) throws Exception {
-        boolean correct = false;
-        Scanner scn = new Scanner(System.in);
-
-        while (!correct) {
-            try {
-                if (excpectedType == "Integer") {
-                    Integer.parseInt(value);
-                    correct = true;
-                }
-                else if (excpectedType == "String") {
-                    char[] c = value.toCharArray();
-                    int letters = 0;
-                    for (char character : c) {
-                        if (Character.isLetter(character)) {
-                            letters++;
-                            break;
-                        }
-                    }
-
-                    if (letters == 0) {
-                        System.out.println("Your value only consists of numbers. Are you sure you want to enter this value? (y/n)");
-                        if (scn.nextLine() == "y") {
-                            correct = true;
-                        }
-                    }
-
-                }
-                else if (excpectedType == "Double") {
-                    Double.parseDouble(value);
-                }
-                else if (excpectedType == "Date") {
-                    Date.parse(value);
-                }
-            }
-            catch (Exception ex) {
-                System.out.println("\nThe value you have entered is not the correct type. Please try again.");
-            }
-           
-        }
     }
 }

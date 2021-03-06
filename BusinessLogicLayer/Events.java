@@ -1,9 +1,6 @@
 package BusinessLogicLayer;
 
 import java.util.List;
-
-import javax.xml.namespace.QName;
-
 import java.util.ArrayList;
 
 public class Events {

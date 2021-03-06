@@ -1,7 +1,7 @@
 package DataAccessLayer;
 
 import java.io.File;  // Import the File class
-import java.io.FileNotFoundException;  // Import this class to handle errors
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner; // Import the Scanner class to read text files
 import java.util.List;
@@ -11,8 +11,8 @@ public class ReadData
 {
     List<Client> clients = new ArrayList<Client>();
     List<Events> events = new ArrayList<Events>();
-
-    public void Read() throws InvalidFileName{
+    
+    public List<Events> getEvents() throws IOException{
       try {
         /////////////////////////////////////////Grab Bookings
         File myObj = new File("Booking.txt");
@@ -40,14 +40,24 @@ public class ReadData
                   menu.add(new MenuItem(item, description, type, price));
               }
           }
-
+          myReader.close();
           //Add event object to list
           events.add(new Events(seperatedData[1], seperatedData[2], seperatedData[3], seperatedData[4], seperatedData[5], seperatedData[6], Integer.parseInt(seperatedData[7]), Integer.parseInt(seperatedData[8]),Integer.parseInt(seperatedData[0]), menu));
         }
+      }
+      catch (IOException ex) {
+        System.out.println(ex);
+      }
+      return events;
+    }
+
+    public List<Client> getClients() throws IOException{
+      try {
+        File myObj = new File("Client.txt");
+        Scanner myReader = new Scanner(myObj);
+        while (myReader.hasNextLine()) {
 
         ////////////////////////////////////////Clients
-        myObj = new File("Client.txt");
-
         //Grab Bookings
         myReader = new Scanner(myObj);
 
@@ -64,16 +74,10 @@ public class ReadData
         myReader.close();
 
       } 
-      catch (FileNotFoundException e) {
-        throw new InvalidFileName("File Not Found");
-      }
     }
-
-    public List<Events> getEvents() {
-      return events;
+    catch (IOException ex) {
+      System.out.println(ex);
     }
-
-    public List<Client> getClients() {
       return clients;
     }
 }
