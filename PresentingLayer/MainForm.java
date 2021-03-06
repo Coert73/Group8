@@ -27,26 +27,27 @@ public class MainForm {
         events = dataHandler.getEvents();
         clients = dataHandler.getClient();
 
-        while (Mainoption !=4)
+        while (Mainoption !=4) 
+        {
         ////////////////////////////////////Main Menu//////////////////////////////////////
         System.out.println("---------MAIN MENU---------");
         System.out.println("1. Display Bookings");
         System.out.println("2. Display Clients");
         System.out.println("3. Add new booking");
-        System.out.println("4. Edit booking");
-        System.out.println("5. Edit client");
-        System.out.println("6. Edit menu items");
-        System.out.println("7. Exit");
+        System.out.println("4. Exit");
         Mainoption = scn.nextInt();
         System.out.println("\n\n");
 
         switch(Mainoption) {
             case 1:
             System.out.println("---------DISPLAY BOOKINGS---------\n");
-            System.out.println("Client ID\t\t\tEvent Type\t\t\tDateAndTime\t\t\tCity\t\t\tArea\t\t\tStreet\t\t\tTheme\t\t\t# of Adults\t\t\t# of Children");
+            System.out.println("Client ID\tEvent Type\t\tDateAndTime\t\tCity\t\tArea\t\tStreet\t\tTheme\t\t# of Adults\t\t# of Children");
             
             for (Events event : events) {
-                System.out.println(event.getClientNum() + "\t\t\t" + event.getEventType() + "\t\t\t" + event.getEventDateandTime() + "\t\t\t" + event.getEventCity() + "\t\t\t" + event.getEventArea() + "\t\t\t" + event.getEventStreet() + "\t\t\t" + event.getEventTheme() + "\t\t\t" + event.getNumberOfAdults() + event.getNumberOfChildren());
+                System.out.println(event.getClientNum() + "\t" + event.getEventType() + "\t\t" + event.getEventDateandTime() + "\t\t" + 
+                event.getEventCity() + "\t\t" + event.getEventArea() + "\t\t" + event.getEventStreet() + "\t\t" + event.getEventTheme() + "\t\t" + 
+                event.getNumberOfAdults() + "\t\t" + event.getNumberOfChildren());
+                
                 System.out.println("-------Menu");
                 System.out.println("Client ID\t\t\tMenu Item\t\t\tDescription\t\t\tType\t\t\tCosts"); 
                 int countb = 1;
@@ -72,7 +73,7 @@ public class MainForm {
             System.out.println("Which client? \n");
             System.out.println("Client ID\t\t\tName\t\t\tSurname\t\t\tPhone");
             for (Client client : clients) {
-                System.out.println(client.getClientNum() + "\t\t\t" + client.getName() + "\t\t\t" + client.getSurname() + "\t\t\t" + client.getCellNumber());
+                System.out.println(client.getClientNum() + "\t" + client.getName() + "\t\t" + client.getSurname() + "\t\t" + client.getCellNumber());
             }
             int clientNum = scn.nextInt();
 
@@ -260,6 +261,7 @@ public class MainForm {
                 dataHandler.saveClients(clients);
                 break;
             }
+        }
         scn.close();//commit 
     }
 
