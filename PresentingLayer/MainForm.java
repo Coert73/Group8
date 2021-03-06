@@ -1,5 +1,7 @@
 package PresentingLayer;
 
+import java.lang.ProcessBuilder.Redirect.Type;
+import java.lang.reflect.Field;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -93,7 +95,6 @@ public class MainForm {
             option = scn.nextInt();
             List<MenuItem> menu = new ArrayList<MenuItem>();
 
-
             String eventType;
             switch(option) {
                 case 1:
@@ -118,10 +119,7 @@ public class MainForm {
                 
                 }
 
-                if (option != 6) {
-
-                    
-
+            if (option != 6) {
                     DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
                     Calendar cal = Calendar.getInstance();
                     Date date = cal.getTime();
@@ -152,11 +150,11 @@ public class MainForm {
                     //Displaying the new Date after addition of Days
                     System.out.println("This will be the next available slot: "+ newDate);
 
-                    if(eventDateandTime => newDate,"Available","Not available")
-                    {
+                    //if(eventDateandTime => newDate,"Available","Not available")
+                    //{
                         System.out.println("Booking date available.");
                         System.out.println("Event date sucessfully set.");
-                    }
+                    //}
                     else
                     {
                         System.out.println("We do not have the date you selected available, please note that you have to place the booking 15 days in advance");
@@ -164,31 +162,29 @@ public class MainForm {
                 
                     //Get adress Details
                     System.out.println("City: ");
-                    eventCity = scn.nextLine();
+                    String eventCity = scn.nextLine();
                     System.out.println("Area: ");
-                    eventArea = scn.nextLine();      
+                    String eventArea = scn.nextLine();      
                     System.out.println("Street: ");
-                    eventStreet = scn.nextLine();
+                    String eventStreet = scn.nextLine();
                     System.out.println("House Number: ");
-                    eventHuoseNumber = scn.nextLine();
+                    String eventHuoseNumber = scn.nextLine();
                     //Compress adress
-                    eventAdress = eventCity + " , " + eventArea + " , " + eventStreet + " , " + eventHuoseNumber + ". ";
-
+                   
                     System.out.println("How many adults?");
-                    numberOfAdults = scn.nextInt();
+                    int numberOfAdults = scn.nextInt();
 
                     System.out.println("How many children?");
-                    numberOfChildren = scn.nextInt();
+                    int numberOfChildren = scn.nextInt();
 
                     System.out.println("Do you want a theme?(Yes/No)");
-                    eventTheme = scn.nextLine();
+                    String eventTheme = scn.nextLine();
 
-                    switch(option) {
-                        case 1:
+                    if (option == 1) 
+                    {
                         System.out.println("==================================Menu:=============================");
-                        System.out.println("Do you want the preset Baby shower snack menu? (yes/no) ");
-                        if (scn.nextLine() == "yes"){
-                            menu.add(new MenuItem());
+                        System.out.println("Do you want the preset Baby shower snack menu? (y/n) ");
+                        if (scn.nextLine() == "y"){
                             System.out.println("Write Description:");
                             String description = scn.nextLine();
                             System.out.println("Cost per unit:");
@@ -198,18 +194,17 @@ public class MainForm {
                             String type = MenuOption();
                             String[] types = type.split(",");
                             for (String string : types) {
-                                menu.add(MenuItem("Snack",string,description,totalCost));
+                                menu.add(new MenuItem("Snack",string,description,totalCost));
                                 System.out.println("Menu item added");
                             }
                         }
-                        
-                        break;
-                        
-                        case 2,3,4,5:
+                         
+                    }
+                    else 
+                    {
                         System.out.println("==================================Menu:=============================");
                         System.out.println("Do you want starters? (yes/no) ");
                         if (scn.nextLine() == "yes"){
-                            menu.add(new MenuItem());
                             System.out.println("Write Description:");
                             String description = scn.nextLine();
                             System.out.println("Cost per unit:");
@@ -219,7 +214,7 @@ public class MainForm {
                             String type = MenuOption();
                             String[] types = type.split(",");
                             for (String string : types) {
-                                menu.add(MenuItem("Starter",string,description,totalCost));
+                                menu.add(new MenuItem("Starter",string,description,totalCost));
                                 System.out.println("Menu item added");
                             }
                         }
@@ -228,7 +223,6 @@ public class MainForm {
 
                         System.out.println("Do you want deserts? (yes/no) ");
                         if (scn.nextLine() == "yes"){
-                            menu.add(new MenuItem());
                             System.out.println("Write Description:");
                             String description = scn.nextLine();
                             System.out.println("Cost per unit:");
@@ -238,14 +232,15 @@ public class MainForm {
                             String type = MenuOption();
                             String[] types = type.split(",");
                             for (String string : types) {
-                                menu.add(MenuItem("Desert",string,description,totalCost));
+                                menu.add(new MenuItem("Desert",string,description,totalCost));
                                 System.out.println("Menu item added");
                             }
                         }
                     }
-                    events.add(new Events(eventType,eventDateandTime,eventCity,eventArea,eventStreet,eventTheme,numberOfAdults,numberOfChildren,clientNum,menu));
-                    break;
-                        }
+                    events.add(new Events(eventType,eventDateandTime,eventCity,eventArea,eventStreet,eventTheme,numberOfAdults,numberOfChildren,clientNum,menu));         
+                }}
+            break;
+
 
                 case 4:
                 System.out.println("---------EDIT BOOKING---------\n");
@@ -255,7 +250,60 @@ public class MainForm {
                     System.out.println(event.getClientNum() + "\t\t\t" + event.getEventType() + "\t\t\t" + event.getEventDateandTime() + "\t\t\t" + event.getEventCity() + "\t\t\t" + event.getEventArea() + "\t\t\t" + event.getEventStreet() + "\t\t\t" + event.getEventTheme() + "\t\t\t" + event.getNumberOfAdults() + event.getNumberOfChildren());
                 
                 }
-//TODO: code an edit function for bookings. Ask them which booking and then what field and then the change value
+                int bookingNum = scn.nextInt();
+                System.out.println("\nWhich field?\n");
+                Field[] fields = Events.class.getFields();
+                int itemNum = 1;
+
+                for (Field field : fields) {
+                    System.out.println(itemNum + ". " + field);
+                    itemNum++;
+                }
+                int fieldNum = scn.nextInt();
+
+                System.out.println("\nEnter new value. Note: Date format (2000-01-01)\n");
+                String newValue = scn.nextLine();
+
+                switch (fieldNum) 
+                {
+                    case 1:
+                    ValidateValue(newValue,"Integer");
+                    events.get(itemNum).setClientNum(newValue);
+                    break;
+                    case 2:
+                    ValidateValue(newValue,"String");
+                    events.get(itemNum).setEventType(newValue);
+                    break;
+                    case 3:
+                    ValidateValue(newValue,"Date");
+                    events.get(itemNum).setEventDateandTime(newValue);
+                    break;
+                    case 4:
+                    ValidateValue(newValue,"String");
+                    events.get(itemNum).setEventCity(newValue);
+                    break;
+                    case 5:
+                    ValidateValue(newValue,"String");
+                    events.get(itemNum).setEventArea(newValue);
+                    break;
+                    case 6:
+                    ValidateValue(newValue,"String");
+                    events.get(itemNum).setEventStreet(newValue);
+                    break;
+                    case 7:
+                    ValidateValue(newValue,"String");
+                    events.get(itemNum).setEventTheme(newValue);
+                    break;
+                    case 8:
+                    ValidateValue(newValue,"Integer");
+                    events.get(itemNum).setNumberOfAdults(newValue);
+                    break;
+                    case 9:
+                    ValidateValue(newValue,"Integer");
+                    events.get(itemNum).setNumberOfChildren(newValue);
+                    break;
+                }
+                System.out.println("\nField Edited\n");
                 break;
 
                 case 5:
@@ -295,7 +343,7 @@ public class MainForm {
         scn.close();//commit 
     }
 
-    public String MenuOption() {
+    public static String MenuOption() {
         
         String type = "";
         while (type == "") {
@@ -325,5 +373,47 @@ public class MainForm {
         return type;
         
         
+    }
+
+    public void ValidateValue(String value, String excpectedType) throws Exception {
+        boolean correct = false;
+        Scanner scn = new Scanner(System.in);
+
+        while (!correct) {
+            try {
+                if (excpectedType == "Integer") {
+                    Integer.parseInt(value);
+                    correct = true;
+                }
+                else if (excpectedType == "String") {
+                    char[] c = value.toCharArray();
+                    int letters = 0;
+                    for (char character : c) {
+                        if (Character.isLetter(character)) {
+                            letters++;
+                            break;
+                        }
+                    }
+
+                    if (letters == 0) {
+                        System.out.println("Your value only consists of numbers. Are you sure you want to enter this value? (y/n)");
+                        if (scn.nextLine() == "y") {
+                            correct = true;
+                        }
+                    }
+
+                }
+                else if (excpectedType == "Double") {
+                    Double.parseDouble(value);
+                }
+                else if (excpectedType == "Date") {
+                    Date.parse(value);
+                }
+            }
+            catch (Exception ex) {
+                System.out.println("\nThe value you have entered is not the correct type. Please try again.");
+            }
+           
+        }
     }
 }

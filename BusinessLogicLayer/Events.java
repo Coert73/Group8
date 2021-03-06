@@ -1,10 +1,14 @@
 package BusinessLogicLayer;
 
 import java.util.List;
+
+import javax.xml.namespace.QName;
+
 import java.util.ArrayList;
 
 public class Events {
 
+      int clientNum;
       String eventType;
       String eventDateandTime;
       String eventCity;
@@ -17,7 +21,6 @@ public class Events {
       String eventTheme;
       int numberOfAdults;
       int numberOfChildren;
-      int clientNum;
 
     //This is a lot more flexible for menu option
       List<MenuItem> menu = new ArrayList<MenuItem>();
