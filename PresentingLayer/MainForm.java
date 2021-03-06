@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Scanner;
-import DataAccessLayer.WriteData;
 
 import java.util.List;
 import BusinessLogicLayer.*;
@@ -256,10 +255,9 @@ public class MainForm {
                     }
                     events.add(new Events(eventType,newDate + " " + eventTime,eventCity,eventArea,eventStreet,eventTheme,numberOfAdults,numberOfChildren,clientNum,menu));         
                 }
-                WriteData write = new WriteData();
                 //Save all info
-                write.SaveBooking(events);
-                write.SaveClients(clients);
+                dataHandler.saveBookings(events);
+                dataHandler.saveClients(clients);
                 break;
             }
         scn.close();//commit 
