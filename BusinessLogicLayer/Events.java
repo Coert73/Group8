@@ -105,8 +105,8 @@ public class Events {
       }
 
 
-      public Events(String eventType, String eventDateandTime, String eventCity, String eventArea, String eventStreet,
-                  String eventTheme, int numberOfAdults, int numberOfChildren, int clientNum, List<MenuItem> menu) {
+      public Events(int clientNum, String eventType, String eventDateandTime, String eventCity, String eventArea, String eventStreet,
+                  String eventTheme, int numberOfAdults, int numberOfChildren, List<MenuItem> menu) {
             this.eventType = eventType;
             this.eventDateandTime = eventDateandTime;
             this.eventCity = eventCity;

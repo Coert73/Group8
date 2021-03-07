@@ -15,7 +15,8 @@ public class ReadData
     public List<Events> getEvents() throws IOException{
       try {
         /////////////////////////////////////////Grab Bookings
-        File myObj = new File("Booking.txt");
+
+        File myObj = new File("Group8\\DataAccessLayer\\Booking.txt");
 
         //Grab Bookings
         Scanner myReader = new Scanner(myObj);
@@ -30,20 +31,20 @@ public class ReadData
           for (String string : seperatedData) {
               if(string.contains("#")) {
                   //Grab Menu Item information
-                  String item = string.substring(1, (string.indexOf("#")-1));
-                  String type = string.substring(string.indexOf("#")+1, (string.indexOf("@")-1));
-                  String description = string.substring(string.indexOf("@")+1, (string.indexOf("$")-1));
+                  String item = string.substring(0, (string.indexOf("#")));
+                  String type = string.substring(string.indexOf("#")+1, (string.indexOf("@")));
+                  String description = string.substring(string.indexOf("@")+1, (string.indexOf("$")));
                   String priceString = string.substring(string.indexOf("$")+1, (string.length()));
                   double price = Double.parseDouble(priceString);
                   //Add menu item
-                  System.out.println("Item: " + item + " type: " + type + " Description: " + description + " Price" + price);
+                  System.out.println("Item: " + item + " type: " + type + " Description: " + description + " Price:" + price);
                   menu.add(new MenuItem(item, description, type, price));
               }
           }
-          myReader.close();
           //Add event object to list
-          events.add(new Events(seperatedData[1], seperatedData[2], seperatedData[3], seperatedData[4], seperatedData[5], seperatedData[6], Integer.parseInt(seperatedData[7]), Integer.parseInt(seperatedData[8]),Integer.parseInt(seperatedData[0]), menu));
+          events.add(new Events(Integer.parseInt(seperatedData[0]),seperatedData[1], seperatedData[2], seperatedData[3], seperatedData[4], seperatedData[5], seperatedData[6], Integer.parseInt(seperatedData[7]), Integer.parseInt(seperatedData[8]), menu));
         }
+        myReader.close();
       }
       catch (IOException ex) {
         System.out.println(ex);
@@ -53,7 +54,7 @@ public class ReadData
 
     public List<Client> getClients() throws IOException{
       try {
-        File myObj = new File("Client.txt");
+        File myObj = new File("Group8\\DataAccessLayer\\Client.txt");
         Scanner myReader = new Scanner(myObj);
         while (myReader.hasNextLine()) {
 
@@ -71,9 +72,8 @@ public class ReadData
         }
         
         System.out.println("Data has been retrieved.");
-        myReader.close();
-
       } 
+      myReader.close();
     }
     catch (IOException ex) {
       System.out.println(ex);
