@@ -11,16 +11,18 @@ public class WriteData {
    public void SaveBooking(List<Events> events)
    {
     try {
-        FileWriter myWriter = new FileWriter("Booking.txt");
+        FileWriter myWriter = new FileWriter("Group8\\DataAccessLayer\\Booking.txt");
         for (Events event : events) {
           String menuItems = "";
           for (MenuItem menuItem : event.getMenu()) {
             menuItems += "," + menuItem.getMenuItem() + "#" + menuItem.getMealType() + "@" + menuItem.getDescription() + "$" + menuItem.getCost();
           }
-          System.out.println(event.getClientNum() + "," + event.getEventType() + "," + event.getEventDateandTime() 
+          String eventStr = event.getClientNum() + "," + event.getEventType() + "," + event.getEventDateandTime() 
           + "," + event.getEventCity() + "," + event.getEventArea() + "," + event.getEventStreet() 
           + "," + event.getEventTheme() + "," + event.getNumberOfAdults() + "," + event.getNumberOfChildren()
-          + menuItems);
+          + menuItems;
+          System.out.println(eventStr);
+          myWriter.write(eventStr);
         }
         myWriter.close();
 
@@ -34,9 +36,10 @@ public class WriteData {
    public void SaveClients(List<Client> clients)
    {
     try {
-        FileWriter myWriter = new FileWriter("Client.txt");
+        FileWriter myWriter = new FileWriter("Group8\\DataAccessLayer\\Client.txt");
         for (Client client : clients) {
-          System.out.println(client.getClientNum() + "," + client.getName() + "," + client.getSurname() + "," + client.getCellNumber());
+          String clientStr = client.getClientNum() + "," + client.getName() + "," + client.getSurname() + "," + client.getCellNumber() + "\n";
+          myWriter.write(clientStr);
         }
         myWriter.close();
       } 
