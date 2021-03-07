@@ -24,6 +24,14 @@ public class MainForm {
         DataHandler dataHandler = new DataHandler();
         int numberOfAdults = 0;
         int numberOfChildren = 0;
+        
+        String eventCity = "";
+        String eventArea = "";     
+        String eventStreet = "";
+        String eventTheme = "None";
+        String eventType="";
+        String newDate="";
+        String eventTime="";
        
         ////////////////////////////////////Grab Data from Reader//////////////////////////////////////
         
@@ -104,7 +112,7 @@ public class MainForm {
                 option = scn.nextInt();
                 List<MenuItem> menu = new ArrayList<MenuItem>();
 
-                String eventType = "Not Specified";
+                eventType = "Not Specified";
                 switch(option) {
                     case 1:
                     eventType = "BabyShower";
@@ -157,12 +165,12 @@ public class MainForm {
                         //Number of Days to add
                         c.add(Calendar.DAY_OF_MONTH, 15);  
                         //Date after adding the days to the given date
-                        String newDate = sdf.format(c.getTime());  
+                        newDate = sdf.format(c.getTime());  
                         //Displaying the new Date after addition of Days
                         System.out.println("This will be the next available slot: "+ newDate);
 
                         boolean correct = false;
-                        String eventTime = "08:00";
+                        eventTime = "08:00";
 
                         while (!correct) {
                             try {
@@ -199,11 +207,11 @@ public class MainForm {
                         System.out.println("\n-----------ADDRESS\n");
                         //Get adress Details
                         System.out.println("City: ");
-                        String eventCity = scn.nextLine();
+                        eventCity = scn.nextLine();
                         System.out.println("Area: ");
-                        String eventArea = scn.nextLine();      
+                        eventArea = scn.nextLine();      
                         System.out.println("Street: ");
-                        String eventStreet = scn.nextLine();
+                        eventStreet = scn.nextLine();
                         //Compress adress
                     
                         System.out.println("\n-----------PARTICIPANTS\n");
@@ -216,7 +224,7 @@ public class MainForm {
                         System.out.println("\n-----------THEME\n");
                         System.out.println("Do you want a theme?(y/n)");
                         String answer = scn.nextLine();
-                        String eventTheme = "None";
+                        eventTheme = "None";
                         if (answer == "y") {
                             System.out.println("Enter your theme:");
                             eventTheme = scn.nextLine();
@@ -225,11 +233,11 @@ public class MainForm {
          
                     //Get adress Details
                     System.out.println("City: ");
-                    String eventCity = scn.nextLine();
+                    eventCity = scn.nextLine();
                     System.out.println("Area: ");
-                    String eventArea = scn.nextLine();      
+                    eventArea = scn.nextLine();      
                     System.out.println("Street: ");
-                    String eventStreet = scn.nextLine();
+                    eventStreet = scn.nextLine();
                     //Compress adress
                    
                     System.out.println("How many adults?");
@@ -239,7 +247,7 @@ public class MainForm {
                     numberOfChildren = scn.nextInt();
 
                     System.out.println("Do you want a theme?(y/n)");
-                    String eventTheme = "None";
+                    eventTheme = "None";
                     if (scn.nextLine() == "y") {
                         System.out.println("Enter your theme:");
                         eventTheme = scn.nextLine();
@@ -428,8 +436,8 @@ public class MainForm {
                                 System.out.println("Total for kids menu: R"+kidsTotalDessert);
 
 
-                            String type = MenuOption();
-                            String[] types = type.split(",");
+                             type = MenuOption();
+                             types = type.split(",");
                             for (String string : types) {
                                // menu.add(new MenuItem("Desert",string,description,totalCost)); Intergated into the above code
                                System.out.println("Menu item added");
@@ -525,8 +533,6 @@ public class MainForm {
                     MenuItem mainCourse = new MenuItem(adult.get(1).getMenuItem(), adult.get(1).getDescription(), adult.get(1).getMealType(),adult.get(1).getCost());
                     SelectedMenu.addMenuItem(mainCourse);
                 } 
-
-
                 
                 System.out.println("Total for adult menu: "+SelectedMenu.MenuTotal(20));//Enter the amount of adults
                
@@ -572,8 +578,10 @@ public class MainForm {
             
             break;
             }
+            scn.close();
+            return type;   
         }
-        scn.close();
-        return type;    
+        
+         
     }
-}
+
