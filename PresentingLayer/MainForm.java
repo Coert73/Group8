@@ -253,12 +253,7 @@ public class MainForm {
                         eventTheme = scn.nextLine();
                     }
                     
-                    MenuItem m = new MenuItem(); 
-                    List<MenuItem> menuu = new ArrayList<>();
-                    menuu = m.ShowMenu();
-                    Menu SelectedMenu = new Menu();
-                    int SelectedItem=0;
-
+                   
                         System.out.println("\n-----------MENU\n");
                         if (option == 1) 
                         {
