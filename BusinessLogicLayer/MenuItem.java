@@ -1,4 +1,7 @@
 package BusinessLogicLayer;
+import DataAccessLayer.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MenuItem {
     private String menuItem; // Either Starter, Main, Dessert or Drinks.
@@ -34,13 +37,37 @@ public class MenuItem {
         this.mealType =MealType;
     }
 
+    public  MenuItem() {
+    
+    }
+
     public MenuItem(String MenuItem,String Description,String MealType, Double Cost) {
         this.menuItem =MenuItem;
         this.description =Description;
         this.mealType =MealType;
         this.cost=Cost;
     }
+    public List ShowMenu() {
 
+        List<MenuItem> item = new ArrayList<>();
+        List temp = new ArrayList<>();
+        Read menu = new Read();
+        temp = menu.getMenuItems();
+    
+        for (Object mi : temp) {
+            String menuItem = mi.toString();
+            String [] data = menuItem.split(",");
+            Double c =Double.parseDouble(data[3]);
+    
+            item.add(new MenuItem(data[0], data[1], data[2], c));
+        }
+        return item;
+    }
+    @Override
+     public String toString()
+    {
+       return String.format("%8s\t%8s\t\t%8s\t\t%8s", getMenuItem(),getDescription(),getMealType(),getCost());
+    }
     
 }
 

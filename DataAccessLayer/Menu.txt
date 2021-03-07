@@ -1,0 +1,12 @@
+Starter,Salad,Adult,35.00
+Starter,Liver,Adult,35.00
+Main,Sirloin,Adult,150.00
+Main,Line Fish,Adult,120.00
+Dessert,Creme Brulee,Adult,60.00
+Dessert,Malva Pudding,Adult,20.00
+Starter,Chicken Nuggets,Kids,35.00
+Starter,Fish Fingers,Kids,35.00
+Main,Cheese Burger,Kids,150.00
+Main,Assorted Pizza,Kids,120.00
+Dessert,Ice-Cream,Kids,60.00
+Dessert,Jelly and Custard,Kids,20.00
