@@ -22,6 +22,8 @@ public class MainForm {
         Scanner scn = new Scanner(System.in);
         int Mainoption = 0;
         DataHandler dataHandler = new DataHandler();
+        int numberOfAdults = 0;
+        int numberOfChildren = 0;
        
         ////////////////////////////////////Grab Data from Reader//////////////////////////////////////
         
@@ -190,6 +192,8 @@ public class MainForm {
                             catch (Exception ex) {
                                 System.out.println("\n[!]You have entered the date incorrectly");
                             }
+
+                       
                         }
             
                         System.out.println("\n-----------ADDRESS\n");
@@ -204,10 +208,10 @@ public class MainForm {
                     
                         System.out.println("\n-----------PARTICIPANTS\n");
                         System.out.println("How many adults?");
-                        int numberOfAdults = scn.nextInt();
+                        numberOfAdults = scn.nextInt();
 
                         System.out.println("How many children?");
-                        int numberOfChildren = scn.nextInt();
+                        numberOfChildren = scn.nextInt();
 
                         System.out.println("\n-----------THEME\n");
                         System.out.println("Do you want a theme?(y/n)");
@@ -229,10 +233,10 @@ public class MainForm {
                     //Compress adress
                    
                     System.out.println("How many adults?");
-                    int numberOfAdults = scn.nextInt();
+                    numberOfAdults = scn.nextInt();
 
                     System.out.println("How many children?");
-                    int numberOfChildren = scn.nextInt();
+                    numberOfChildren = scn.nextInt();
 
                     System.out.println("Do you want a theme?(y/n)");
                     String eventTheme = "None";
@@ -269,8 +273,15 @@ public class MainForm {
                         }
                          
                     }
+                    
                     else 
                     {
+                        MenuItem m = new MenuItem();    
+                        List<MenuItem> menu = new ArrayList<>();
+                        menu = m.ShowMenu();
+                        Menu SelectedMenu = new Menu();
+                        int SelectedItem=0; 
+
                         System.out.println("==================================Menu:=============================");
                         System.out.println("Do you want starters? (yes/no) ");
                         if (scn.nextLine() == "yes"){
@@ -353,7 +364,7 @@ public class MainForm {
                             
                             SelectedItem=0;
                             System.out.println("\n Available Menu Options for Adults");
-                            List<MenuItem> adult = new ArrayList<>();
+                           
                             adult.clear();
                             System.out.println("\n");
                             System.out.println("Dessert Options \n");
@@ -385,7 +396,7 @@ public class MainForm {
 
 
                                 System.out.println("\n Available Menu Options for Kids");
-                                List<MenuItem> kids = new ArrayList<>();
+                               
                                 SelectedItem=0;
                                 kids.clear();
                                 System.out.println("\n");
@@ -413,8 +424,8 @@ public class MainForm {
                                 SelectedMenu.addMenuItem(dessert);
                                 }
 
-                                Double kidsTotal =SelectedMenu.MenuTotal(numberOfChildren);
-                                System.out.println("Total for kids menu: R"+kidsTotal);
+                                Double kidsTotalDessert =SelectedMenu.MenuTotal(numberOfChildren);
+                                System.out.println("Total for kids menu: R"+kidsTotalDessert);
 
 
                             String type = MenuOption();
