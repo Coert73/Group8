@@ -197,6 +197,12 @@ public class MainForm {
                         System.out.println("Enter your theme:");
                         eventTheme = scn.nextLine();
                     }
+                    
+                    MenuItem m = new MenuItem(); 
+                    List<MenuItem> menuu = new ArrayList<>();
+                    menuu = m.ShowMenu();
+                    Menu SelectedMenu = new Menu();
+                    int SelectedItem=0;
 
                     if (option == 1) 
                     {
@@ -223,16 +229,75 @@ public class MainForm {
                         System.out.println("==================================Menu:=============================");
                         System.out.println("Do you want starters? (yes/no) ");
                         if (scn.nextLine() == "yes"){
-                            System.out.println("Write Description:");
-                            String description = scn.nextLine();
-                            System.out.println("Cost per unit:");
-                            double costPerUnit = scn.nextDouble();
-                            double totalCost = (numberOfAdults + numberOfChildren) * costPerUnit;
+                            System.out.println("\n Available Menu Options for Adults");
+                            List<MenuItem> adult = new ArrayList<>();
+                
+                            System.out.println("\n");
+                            System.out.println("Starter Options \n");
+                                for (MenuItem menuItem : menu) {
+                                    if (menuItem.getMealType().equalsIgnoreCase("Adult") & menuItem.getMenuItem().equalsIgnoreCase("Starter")) {
+                                        adult.add(menuItem);
+                                    }
+                                }
+                                System.out.println("Description"+"\t"+"Price Per Person");
+                                for (MenuItem menuItemA : adult) {
+                                    System.out.println(adult.indexOf(menuItemA)+1+". "+menuItemA.getDescription()+"\t"+"R"+menuItemA.getCost());
+                                }
+                                System.out.println("\n");
+                
+                                System.out.print("Enter choice:");
+                                SelectedItem = scn.nextInt();
+                                if (SelectedItem==1) {
+                                    MenuItem starter = new MenuItem(adult.get(0).getMenuItem(), adult.get(0).getDescription(), adult.get(0).getMealType(),adult.get(0).getCost());
+                                    menu.add(new MenuItem(adult.get(0).getMenuItem(),adult.get(0).getDescription(),adult.get(0).getMealType(),adult.get(0).getCost()));
+                                    SelectedMenu.addMenuItem(starter);
+                                }
+                                else if (SelectedItem==2) {
+                                    MenuItem starter = new MenuItem(adult.get(1).getMenuItem(), adult.get(1).getDescription(), adult.get(1).getMealType(),adult.get(1).getCost());
+                                    menu.add(new MenuItem(adult.get(1).getMenuItem(),adult.get(1).getDescription(),adult.get(1).getMealType(),adult.get(1).getCost()));
+                                    SelectedMenu.addMenuItem(starter);
+                                } 
+                            
+                                Double adultTotal =SelectedMenu.MenuTotal(numberOfAdults);
+                                System.out.println("Total for adult menu: R"+adultTotal);
+
+                                
+                                System.out.println("\n Available Menu Options for Kids");
+                                List<MenuItem> kids = new ArrayList<>();
+
+                                System.out.println("\n");
+                                System.out.println("Starter Options \n");
+                                for (MenuItem menuItem : menu) {
+                                if (menuItem.getMealType().equalsIgnoreCase("Kids")& menuItem.getMenuItem().equalsIgnoreCase("Starter")) {
+                                kids.add(menuItem);
+                                }
+                                }
+                                System.out.println("Description"+"\t"+"Price Per Person");
+                                for (MenuItem menuItemK : kids) {
+                                System.out.println(kids.indexOf(menuItemK)+1+". "+menuItemK.getDescription()+"\t"+"R"+menuItemK.getCost());
+                                }
+
+                                System.out.print("Enter choice:");
+                                SelectedItem = scn.nextInt();
+                                if (SelectedItem==1) {
+                                MenuItem starter = new MenuItem(kids.get(0).getMenuItem(), kids.get(0).getDescription(), kids.get(0).getMealType(),kids.get(0).getCost());
+                                menu.add(new MenuItem(kids.get(0).getMenuItem(),kids.get(0).getDescription(),kids.get(0).getMealType(),kids.get(0).getCost()));
+                                SelectedMenu.addMenuItem(starter);
+                                }
+                                else if (SelectedItem==2) {
+                                MenuItem starter = new MenuItem(kids.get(1).getMenuItem(), kids.get(1).getDescription(), kids.get(1).getMealType(),kids.get(1).getCost());
+                                menu.add(new MenuItem(kids.get(1).getMenuItem(),kids.get(1).getDescription(),kids.get(1).getMealType(),kids.get(1).getCost()));
+                                SelectedMenu.addMenuItem(starter);
+                                } 
+
+                                Double kidsTotal =SelectedMenu.MenuTotal(numberOfChildren);
+                                System.out.println("Total for adult menu: R"+kidsTotal);
+
 
                             String type = MenuOption();
                             String[] types = type.split(",");
                             for (String string : types) {
-                                menu.add(new MenuItem("Starter",string,description,totalCost));
+                              //  menu.add(new MenuItem("Starter",string,description,totalCost)); intergrated into the above code
                                 System.out.println("Menu item added");
                             }
                         }
@@ -241,17 +306,78 @@ public class MainForm {
 
                         System.out.println("Do you want deserts? (yes/no) ");
                         if (scn.nextLine() == "yes"){
-                            System.out.println("Write Description:");
-                            String description = scn.nextLine();
-                            System.out.println("Cost per unit:");
-                            double costPerUnit = scn.nextDouble();
-                            double totalCost = (numberOfAdults + numberOfChildren) * costPerUnit;
+                            
+                            SelectedItem=0;
+                            System.out.println("\n Available Menu Options for Adults");
+                            List<MenuItem> adult = new ArrayList<>();
+                            adult.clear();
+                            System.out.println("\n");
+                            System.out.println("Dessert Options \n");
+                                for (MenuItem menuItem : menu) {
+                                    if (menuItem.getMealType().equalsIgnoreCase("Adult") & menuItem.getMenuItem().equalsIgnoreCase("Dessert")) {
+                                        adult.add(menuItem);
+                                    }
+                                }
+                                System.out.println("Description"+"\t"+"Price Per Person");
+                                for (MenuItem menuItemA : adult) {
+                                    System.out.println(adult.indexOf(menuItemA)+1+". "+menuItemA.getDescription()+"\t"+"R"+menuItemA.getCost());
+                                }
+                                System.out.println("\n");
+                
+                                System.out.print("Enter choice:");
+                                SelectedItem = scn.nextInt();
+                                if (SelectedItem==1) {
+                                    MenuItem dessert = new MenuItem(adult.get(0).getMenuItem(), adult.get(0).getDescription(), adult.get(0).getMealType(),adult.get(0).getCost());
+                                    menu.add(new MenuItem(adult.get(0).getMenuItem(),adult.get(0).getDescription(),adult.get(0).getMealType(),adult.get(0).getCost()));
+                                    SelectedMenu.addMenuItem(dessert);
+                                }
+                                else if (SelectedItem==2) {
+                                    MenuItem dessert = new MenuItem(adult.get(1).getMenuItem(), adult.get(1).getDescription(), adult.get(1).getMealType(),adult.get(1).getCost());
+                                    menu.add(new MenuItem(adult.get(1).getMenuItem(),adult.get(1).getDescription(),adult.get(1).getMealType(),adult.get(1).getCost()));
+                                    SelectedMenu.addMenuItem(dessert);
+                                } 
+                                Double adultsTotal =SelectedMenu.MenuTotal(numberOfAdults);
+                                System.out.println("Total for adult menu: R"+adultsTotal);
+
+
+                                System.out.println("\n Available Menu Options for Kids");
+                                List<MenuItem> kids = new ArrayList<>();
+                                SelectedItem=0;
+                                kids.clear();
+                                System.out.println("\n");
+                                System.out.println("Dessert Options \n");
+                                for (MenuItem menuItem : menu) {
+                                if (menuItem.getMealType().equalsIgnoreCase("Kids")& menuItem.getMenuItem().equalsIgnoreCase("Dessert")) {
+                                kids.add(menuItem);
+                                }
+                                }
+                                System.out.println("Description"+"\t"+"Price Per Person");
+                                for (MenuItem menuItemK : kids) {
+                                System.out.println(kids.indexOf(menuItemK)+1+". "+menuItemK.getDescription()+"\t"+"R"+menuItemK.getCost());
+                                }
+
+                                System.out.print("Enter choice:");
+                                SelectedItem = scn.nextInt();
+                                if (SelectedItem==1) {
+                                MenuItem dessert = new MenuItem(kids.get(0).getMenuItem(), kids.get(0).getDescription(), kids.get(0).getMealType(),kids.get(0).getCost());
+                                menu.add(new MenuItem(kids.get(0).getMenuItem(),kids.get(0).getDescription(),kids.get(0).getMealType(),kids.get(0).getCost()));
+                                SelectedMenu.addMenuItem(dessert);
+                                }
+                                else if (SelectedItem==2) {
+                                MenuItem dessert = new MenuItem(kids.get(1).getMenuItem(), kids.get(1).getDescription(), kids.get(1).getMealType(),kids.get(1).getCost());
+                                menu.add(new MenuItem(kids.get(1).getMenuItem(),kids.get(1).getDescription(),kids.get(1).getMealType(),kids.get(1).getCost()));
+                                SelectedMenu.addMenuItem(dessert);
+                                }
+
+                                Double kidsTotal =SelectedMenu.MenuTotal(numberOfChildren);
+                                System.out.println("Total for kids menu: R"+kidsTotal);
+
 
                             String type = MenuOption();
                             String[] types = type.split(",");
                             for (String string : types) {
-                                menu.add(new MenuItem("Desert",string,description,totalCost));
-                                System.out.println("Menu item added");
+                               // menu.add(new MenuItem("Desert",string,description,totalCost)); Intergated into the above code
+                               System.out.println("Menu item added");
                             }
                         }
                     }
@@ -271,11 +397,11 @@ public class MainForm {
         String type = "";
         while (type == "") {
         Scanner scn = new Scanner(System.in);
-        MenuItem m = new MenuItem();
+        MenuItem m = new MenuItem();    
         List<MenuItem> menu = new ArrayList<>();
         menu = m.ShowMenu();
         Menu SelectedMenu = new Menu();
-        int SelectedItem=0;
+        int SelectedItem=0; 
 
         System.out.println("\nWhat type of menu?");
         System.out.println("1. Adult");
@@ -287,32 +413,8 @@ public class MainForm {
         switch(decision) {
             case 1:
             type = "Adult";
-            System.out.println("\n Available Menu Options for Adults");
+            System.out.println("\n Available Menu Options for Adults"); //Delete From here
             List<MenuItem> adult = new ArrayList<>();
-
-            System.out.println("\n");
-            System.out.println("Starter Options \n");
-                for (MenuItem menuItem : menu) {
-                    if (menuItem.getMealType().equalsIgnoreCase("Adult") & menuItem.getMenuItem().equalsIgnoreCase("Starter")) {
-                        adult.add(menuItem);
-                    }
-                }
-                System.out.println("Description"+"\t"+"Price Per Person");
-                for (MenuItem menuItemA : adult) {
-                    System.out.println(menuItemA.getDescription()+"\t"+menuItemA.getCost());
-                }
-                System.out.println("\n");
-
-                System.out.print("Enter choice:");
-                SelectedItem = scn.nextInt();
-                if (SelectedItem==1) {
-                    MenuItem starter = new MenuItem(adult.get(0).getMenuItem(), adult.get(0).getDescription(), adult.get(0).getMealType(),adult.get(0).getCost());
-                    SelectedMenu.addMenuItem(starter);
-                }
-                else if (SelectedItem==2) {
-                    MenuItem starter = new MenuItem(adult.get(1).getMenuItem(), adult.get(1).getDescription(), adult.get(1).getMealType(),adult.get(1).getCost());
-                    SelectedMenu.addMenuItem(starter);
-                } 
 
                 System.out.println("Main Options \n");
                 adult.clear();
@@ -325,7 +427,7 @@ public class MainForm {
                 }
                 System.out.println("Description"+"\t"+"Price Per Person");
                 for (MenuItem menuItemA : adult) {
-                    System.out.println(menuItemA.getDescription()+"\t"+menuItemA.getCost());
+                    System.out.println(adult.indexOf(menuItemA)+1+". "+menuItemA.getDescription()+"\t"+"R"+menuItemA.getCost());
                 }
                 System.out.println("\n");
 
@@ -341,31 +443,7 @@ public class MainForm {
                 } 
 
 
-                System.out.println("Dessert Options \n");
-                adult.clear();
-                SelectedItem=0;
-
-                for (MenuItem menuItem : menu) {
-                    if (menuItem.getMealType().equalsIgnoreCase("Adult") & menuItem.getMenuItem().equalsIgnoreCase("Dessert")) {
-                        adult.add(menuItem);
-                    }
-                }
-                System.out.println("Description"+"\t"+"Price Per Person");
-                for (MenuItem menuItemA : adult) {
-                    System.out.println(menuItemA.getDescription()+"\t"+menuItemA.getCost());
-                }
                 
-                System.out.print("Enter choice:");
-                SelectedItem = scn.nextInt();
-                if (SelectedItem==1) {
-                    MenuItem dessert = new MenuItem(adult.get(0).getMenuItem(), adult.get(0).getDescription(), adult.get(0).getMealType(),adult.get(0).getCost());
-                    SelectedMenu.addMenuItem(dessert);
-                }
-                else if (SelectedItem==2) {
-                    MenuItem dessert = new MenuItem(adult.get(1).getMenuItem(), adult.get(1).getDescription(), adult.get(1).getMealType(),adult.get(1).getCost());
-                    SelectedMenu.addMenuItem(dessert);
-                } 
-
                 System.out.println("Total for adult menu: "+SelectedMenu.MenuTotal(20));//Enter the amount of adults
                
 
@@ -374,31 +452,7 @@ public class MainForm {
             case 2:
             type = "Kids";
             System.out.println("\n Available Menu Options for Kids");
-            List<MenuItem> kids = new ArrayList<>();
-
-            System.out.println("\n");
-            System.out.println("Starter Options \n");
-            System.out.println("Starter Options");
-                for (MenuItem menuItem : menu) {
-                    if (menuItem.getMealType().equalsIgnoreCase("Kids")& menuItem.getMenuItem().equalsIgnoreCase("Starter")) {
-                        kids.add(menuItem);
-                    }
-                }
-                System.out.println("Description"+"\t"+"Price Per Person");
-                for (MenuItem menuItemK : kids) {
-                    System.out.println(menuItemK.getDescription()+"\t"+menuItemK.getCost());
-                }
-
-                System.out.print("Enter choice:");
-                SelectedItem = scn.nextInt();
-                if (SelectedItem==1) {
-                    MenuItem starter = new MenuItem(kids.get(0).getMenuItem(), kids.get(0).getDescription(), kids.get(0).getMealType(),kids.get(0).getCost());
-                    SelectedMenu.addMenuItem(starter);
-                }
-                else if (SelectedItem==2) {
-                    MenuItem starter = new MenuItem(kids.get(1).getMenuItem(), kids.get(1).getDescription(), kids.get(1).getMealType(),kids.get(1).getCost());
-                    SelectedMenu.addMenuItem(starter);
-                } 
+            List<MenuItem> kids = new ArrayList<>(); 
 
                 System.out.println("Main Options \n");
                 kids.clear();
@@ -410,7 +464,7 @@ public class MainForm {
                 }
                 System.out.println("Description"+"\t"+"Price Per Person");
                 for (MenuItem menuItemK : kids) {
-                    System.out.println(menuItemK.getDescription()+"\t"+menuItemK.getCost());
+                    System.out.println(kids.indexOf(menuItemK)+1+". "+menuItemK.getDescription()+"\t"+menuItemK.getCost());
                 }
 
                 System.out.print("Enter choice:");
@@ -423,30 +477,7 @@ public class MainForm {
                     MenuItem mainCourse = new MenuItem(kids.get(1).getMenuItem(), kids.get(1).getDescription(), kids.get(1).getMealType(),kids.get(1).getCost());
                     SelectedMenu.addMenuItem(mainCourse);
                 } 
-
-                System.out.println("Dessert Options \n");
-                kids.clear();
-                SelectedItem=0;
-                for (MenuItem menuItem : menu) {
-                    if (menuItem.getMealType().equalsIgnoreCase("Kids")& menuItem.getMenuItem().equalsIgnoreCase("Dessert")) {
-                        kids.add(menuItem);
-                    }
-                }
-                System.out.println("Description"+"\t"+"Price Per Person");
-                for (MenuItem menuItemK : kids) {
-                    System.out.println(menuItemK.getDescription()+"\t"+menuItemK.getCost());
-                }
-            
-                System.out.print("Enter choice:");
-                SelectedItem = scn.nextInt();
-                if (SelectedItem==1) {
-                    MenuItem dessert = new MenuItem(kids.get(0).getMenuItem(), kids.get(0).getDescription(), kids.get(0).getMealType(),kids.get(0).getCost());
-                    SelectedMenu.addMenuItem(dessert);
-                }
-                else if (SelectedItem==2) {
-                    MenuItem dessert = new MenuItem(kids.get(1).getMenuItem(), kids.get(1).getDescription(), kids.get(1).getMealType(),kids.get(1).getCost());
-                    SelectedMenu.addMenuItem(dessert);
-                } 
+ 
 
                 System.out.println("Total for kids menu: R"+SelectedMenu.MenuTotal(20));//Enter the amount of kids
 
